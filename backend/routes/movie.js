@@ -8,15 +8,15 @@ const { auth } = require('../middleware/auth');
 // http://localhost:5000/api/movie
 router.get('/movie/search', auth, search);
 
-router.get('/movie', auth, list);
+router.get('/movie', list);
 
-router.get('/movie/:id', auth, read);
+router.get('/movie/:id', read);
 
-router.post('/movie', auth, create);
+router.post('/movie', create);
 
-router.put('/movie/:id', auth, update);
+router.put('/movie/:id', update);
 
-router.delete('/movie/:id', auth, remove);
+router.delete('/movie/:id', remove);
 
 
 module.exports = router;
