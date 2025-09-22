@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Movie from './pages/Movie';
 import Cinema from './pages/Cinema';
+import Detail from './pages/Detail';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="cinema" element={<Cinema />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="detail/:id" element={<Detail />} />
+          <Route path="search" element={<Search />} />
         </Route>
 
         {/* Protected area with DashboardLayout */}
