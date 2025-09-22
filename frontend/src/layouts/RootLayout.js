@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 
 const RootLayout = () => {
   return (
-    <div className="bg-gradient-to-br from-[#0A22FA] via-black to-[#560081] min-h-screen">
+    <div className="bg-gradient-to-br from-[#050170] via-black to-[#560081] min-h-screen">
         <Navbar />
         <main>
             <Outlet />

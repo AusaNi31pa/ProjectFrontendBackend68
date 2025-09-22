@@ -20,11 +20,6 @@ const Navbar = () => {
           }>
             Home
           </NavLink>
-          <NavLink to="/movie" className={({ isActive }) =>
-            `${linkBase} ${isActive ? linkActive : ""}`
-          }>
-            Movie
-          </NavLink>
           <NavLink to="/cinema" className={({ isActive }) =>
             `${linkBase} ${isActive ? linkActive : ""}`
           }>

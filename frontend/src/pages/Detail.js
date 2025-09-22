@@ -72,7 +72,7 @@ const Detail = () => {
         <div>
             {/* Title */}
             <div className="h-32 flex items-center pl-44">
-                <h1 className="text-4xl font-bold text-white">
+                <h1 className="text-4xl font-bold text-[#8F00D7] drop-shadow-[0_0_15px_rgba(143,0,215,0.9)]">
                     Movie Detail
                 </h1>
             </div>

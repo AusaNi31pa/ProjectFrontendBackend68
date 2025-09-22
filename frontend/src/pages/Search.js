@@ -74,8 +74,8 @@ export default function Search() {
   return (
     <div className="text-white font-saira items-center flex flex-col pb-10">
       {/* Search Title */}
-      <div className="px-10 pt-10 w-full">
-        <h2 className="text-3xl font-bold text-[#8F00D7] drop-shadow-[0_0_10px_rgba(168,85,247,0.9)] text-left">
+      <div className="px-44 pt-10 w-full">
+        <h2 className="text-4xl font-bold text-[#8F00D7] drop-shadow-[0_0_15px_rgba(143,0,215,0.9)]">
           Search
         </h2>
       </div>

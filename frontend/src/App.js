@@ -3,7 +3,6 @@ import RootLayout from './layouts/RootLayout';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Movie from './pages/Movie';
 import Cinema from './pages/Cinema';
 import Detail from './pages/Detail';
 import Search from './pages/Search';
@@ -15,7 +14,6 @@ function App() {
         {/* Public area with RootLayout */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="movie" element={<Movie />} />
           <Route path="cinema" element={<Cinema />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
