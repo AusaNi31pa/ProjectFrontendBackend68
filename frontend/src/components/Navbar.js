@@ -25,7 +25,7 @@ const Navbar = () => {
           }>
             Cinema
           </NavLink>
-          <NavLink to="/booking" className={({ isActive }) =>
+          <NavLink to="/booking:id" className={({ isActive }) =>
             `${linkBase} ${isActive ? linkActive : ""}`
           }>
             Booking

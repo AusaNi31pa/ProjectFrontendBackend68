@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Cinema from './pages/Cinema';
 import Detail from './pages/Detail';
 import Search from './pages/Search';
+import Booking from './pages/BookingConfirm'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="detail/:id" element={<Detail />} />
           <Route path="search" element={<Search />} />
+          <Route path="booking/:id" element={<Booking />} />
         </Route>
 
         {/* Protected area with DashboardLayout */}
