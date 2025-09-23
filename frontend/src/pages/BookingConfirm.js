@@ -5,17 +5,17 @@ export default function BookingConfirm() {
   const [payment, setPayment] = useState("");
 
   return (
-    <div className="text-white font-saira">
+    <div className="text-white">
       {/* 🟣 Title */}
       <div className="px-44 pt-10 w-full">
-        <h1 className="text-4xl font-bold text-[#8F00D7] drop-shadow-[0_0_15px_rgba(143,0,215,0.9)]">
+        <h1 className="font-goldman text-4xl font-bold text-[#8F00D7] drop-shadow-[0_0_15px_rgba(143,0,215,0.9)]">
           Summary
         </h1>
       </div>
 
       {/* 🟣 Booking Card Wrapper */}
       <div className="max-w-5xl mx-auto mt-12 bg-black/40 rounded-2xl p-10 shadow-xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[400px]">
+        <div className="font-battambang grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[400px]">
 
           {/* 🟣 Left Section */}
           <div className="flex flex-col justify-between border-r border-gray-500 pr-10">

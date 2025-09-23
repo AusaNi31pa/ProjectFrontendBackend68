@@ -4,8 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        saira: ["Saira Stencil One", "sans-serif"],
+        battambang: ["Battambang", "cursive"],
+        goldman: ["Goldman", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 }
-

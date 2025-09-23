@@ -17,12 +17,12 @@ const Navbar = () => {
   return (
     <header>
       <nav className="container-page flex items-center justify-around h-14 px-6">
-        <Link to="/" className="font-bold text-xl text-white flex items-center gap-2">
+        <Link to="/" className="font-saira text-xl text-white flex items-center gap-2">
           <img src="/logo.png" alt="logo" className="h-8" />
           TIDWAEN CINEMA
         </Link>
 
-        <div className="flex gap-10">
+        <div className="font-battambang flex gap-10">
           <NavLink to="/" end className={({ isActive }) => `${linkBase} ${isActive ? linkActive : ""}`}>Home</NavLink>
           <NavLink to="/cinema" className={({ isActive }) => `${linkBase} ${isActive ? linkActive : ""}`}>Cinema</NavLink>
 
@@ -37,19 +37,19 @@ const Navbar = () => {
             <FiSearch />
           </Link>
 
-          <button className="px-2 py-1 border border-gray-400 text-sm text-white rounded">
+          <button className="font-battambang px-2 py-1 border border-gray-400 text-sm text-white rounded">
             TH
           </button>
 
           {!isLoggedIn ? (
             <>
               <NavLink to="/register">
-                <button className="px-4 py-1 rounded-full text-white text-sm bg-gradient-to-r from-[#560081] via-[#5335FF] to-[#1091FB] hover:opacity-90 transition">
+                <button className="font-battambang px-4 py-1 rounded-full text-white text-sm bg-gradient-to-r from-[#560081] via-[#5335FF] to-[#1091FB] hover:opacity-90 transition">
                   Register
                 </button>
               </NavLink>
               <NavLink to="/login">
-                <button className="px-4 py-1 rounded-full text-white text-sm bg-gradient-to-r from-[#560081] via-[#5335FF] to-[#1091FB] hover:opacity-90 transition">
+                <button className="font-battambang px-4 py-1 rounded-full text-white text-sm bg-gradient-to-r from-[#560081] via-[#5335FF] to-[#1091FB] hover:opacity-90 transition">
                   Login
                 </button>
               </NavLink>

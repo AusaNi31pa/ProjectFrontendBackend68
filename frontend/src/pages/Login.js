@@ -48,10 +48,10 @@ export default function Login() {
       </div>
 
       {/* Right side - Login Form */}
-      <div className="flex flex-col w-full md:w-1/2 justify-center items-center p-10">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+      <div className="font-battambang flex flex-col w-full md:w-1/2 justify-center items-center p-10">
+        <h2 className="text-2xl font-bold md:text-4xl mb-6 text-center">
           Welcome To <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-300">
+          <span className="font-saira text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-300">
             TIDWAEN CINEMA
           </span>
         </h2>
@@ -74,7 +74,7 @@ export default function Login() {
             value={form.password}
             onChange={handleChange}
             className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
-                       focus:outline-none focus:ring-2 focus:ring-blue-500 
+                       focus:outline-none focus:ring-2 focus:ring-purple-500 
                        transition duration-300 ease-in-out focus:scale-105"
           />
 
@@ -96,7 +96,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-full font-bold text-lg text-white
+            className="w-full py-3 rounded-full text-lg text-white
                        bg-gradient-to-r from-purple-600 to-blue-500
                        hover:opacity-90 transition disabled:opacity-60"
           >

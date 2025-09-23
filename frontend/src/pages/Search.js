@@ -72,10 +72,10 @@ export default function Search() {
   const showTimes = generateTimes(600, 1380, 30); // 600=10:00, 1380=23:00
 
   return (
-    <div className="text-white font-saira items-center flex flex-col pb-10">
+    <div className="text-white font-battambang items-center flex flex-col pb-10">
       {/* Search Title */}
       <div className="px-44 pt-10 w-full">
-        <h2 className="text-4xl font-bold text-[#8F00D7] drop-shadow-[0_0_15px_rgba(143,0,215,0.9)]">
+        <h2 className="font-goldman text-4xl font-bold text-[#8F00D7] drop-shadow-[0_0_15px_rgba(143,0,215,0.9)]">
           Search
         </h2>
       </div>
