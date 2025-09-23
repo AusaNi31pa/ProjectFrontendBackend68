@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { login as apiLogin, saveAuth } from "../functions/product";
+import { useAuth } from "../context/AuthContext";
 import { FaApple, FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
-const Login = () => {
+export default function Login() {
+  const navigate = useNavigate();
+  const { login: setAuthLogin } = useAuth(); // ✅ ดึง login จาก Context
+  const [form, setForm] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) =>
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      const res = await apiLogin(form.username, form.password);
+      // สมมติรูปแบบ: res.data = { success, token, payload }
+      saveAuth(res.data);                    // เก็บลง localStorage (ของคุณเดิม)
+      setAuthLogin(res.data?.token);        // ✅ แจ้ง Context เพื่อให้ Navbar อัปเดตทันที
+      navigate("/");                        // ไปหน้า Home หรือที่ต้องการ
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "เข้าสู่ระบบไม่สำเร็จ";
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex text-white h-[885px]">
       {/* Left side - Image */}
@@ -23,42 +56,62 @@ const Login = () => {
           </span>
         </h2>
 
-        <div className="w-full max-w-sm space-y-4">
+        <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
           <input
+            name="username"
             type="text"
             placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
             className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
                        focus:outline-none focus:ring-2 focus:ring-purple-500 
                        transition duration-300 ease-in-out focus:scale-105"
           />
           <input
+            name="password"
             type="password"
             placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
             className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
                        focus:outline-none focus:ring-2 focus:ring-blue-500 
                        transition duration-300 ease-in-out focus:scale-105"
           />
-          <div className="text-right text-sm text-gray-300 cursor-pointer hover:underline">
-            Forget Password
+
+          {error && (
+            <div className="text-red-400 text-sm bg-red-950/40 border border-red-500/30 rounded-md px-3 py-2">
+              {error}
+            </div>
+          )}
+
+          <div className="flex justify-end">
+            <Link
+              to="/forgot-password"
+              className="text-sm text-gray-300 hover:underline hover:text-blue-400 transition"
+            >
+              Forget Password?
+            </Link>
           </div>
-          <button className="w-full py-3 rounded-full font-bold text-lg text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:opacity-90 transition">
-            Login
-          </button>
-        </div>
 
-        {/* Social login */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-full font-bold text-lg text-white
+                       bg-gradient-to-r from-purple-600 to-blue-500
+                       hover:opacity-90 transition disabled:opacity-60"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        {/* Social login (placeholder) */}
         <div className="flex gap-6 mt-8">
-          {/* Google */}
           <button className="w-12 h-12 flex items-center justify-center bg-white rounded-lg shadow hover:scale-105 transition">
-            <FcGoogle size={22} className="text-[#000000]" />
+            <FcGoogle size={22} />
           </button>
-
-          {/* Apple */}
           <button className="w-12 h-12 flex items-center justify-center bg-white rounded-lg shadow hover:scale-105 transition">
             <FaApple size={24} className="text-black" />
           </button>
-
-          {/* Facebook */}
           <button className="w-12 h-12 flex items-center justify-center bg-white rounded-lg shadow hover:scale-105 transition">
             <FaFacebookF size={22} className="text-[#1877F2]" />
           </button>
@@ -66,6 +119,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}

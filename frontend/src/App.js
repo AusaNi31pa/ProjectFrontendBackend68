@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from "./context/AuthContext";
 import RootLayout from './layouts/RootLayout';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -10,21 +11,22 @@ import Booking from './pages/BookingConfirm'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public area with RootLayout */}
-        <Route element={<RootLayout />}>
-          <Route index element={<Home />} />
-          <Route path="cinema" element={<Cinema />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="detail/:id" element={<Detail />} />
-          <Route path="search" element={<Search />} />
-          <Route path="booking/:id" element={<Booking />} />
-        </Route>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public area with RootLayout */}
+          <Route element={<RootLayout />}>
+            <Route index element={<Home />} />
+            <Route path="cinema" element={<Cinema />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="detail/:id" element={<Detail />} />
+            <Route path="search" element={<Search />} />
+            <Route path="booking/:id" element={<Booking />} />
+          </Route>
 
-        {/* Protected area with DashboardLayout */}
-        {/* <Route element={<ProtectedRoute isAuthed={isAuthed} />}>
+          {/* Protected area with DashboardLayout */}
+          {/* <Route element={<ProtectedRoute isAuthed={isAuthed} />}>
           <Route path="dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardHome />} />
             <Route path="projects" element={<Projects />} />
@@ -32,18 +34,18 @@ function App() {
           </Route>
         </Route> */}
 
-        {/* 404 */}
-        <Route
-          path="*"
-          element={
-            <div className="container-page py-10">
-              <h1 className="text-3xl font-bold">404 Not Found</h1>
-            </div>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-
+          {/* 404 */}
+          <Route
+            path="*"
+            element={
+              <div className="container-page py-10">
+                <h1 className="text-3xl font-bold">404 Not Found</h1>
+              </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

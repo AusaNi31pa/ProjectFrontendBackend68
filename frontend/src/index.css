@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ซ่อน scrollbar ทุก browser */
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* สำหรับ Chrome, Safari */
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE และ Edge */
+  scrollbar-width: none; /* Firefox */
+}

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { register as registerApi } from "../functions/product"; // ← ใช้ฟังก์ชันแยกไฟล์
 import { FaApple, FaFacebookF } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";  
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
@@ -12,16 +15,61 @@ const Register = () => {
     confirm: "",
     agree: false,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");    // ข้อผิดพลาดรวม (server/client)
+  const [fieldErr, setFieldErr] = useState({}); // error ราย field (client)
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((p) => ({ ...p, [name]: type === "checkbox" ? checked : value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Submitted: " + JSON.stringify(form, null, 2));
+  const validate = () => {
+    const fe = {};
+    if (!form.firstname.trim()) fe.firstname = "Required";
+    if (!form.lastname.trim()) fe.lastname = "Required";
+    if (!form.username.trim()) fe.username = "Required";
+    if (!form.email.trim()) fe.email = "Required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) fe.email = "Invalid email";
+    if (!form.password) fe.password = "Required";
+    if (form.password.length < 6) fe.password = "At least 6 characters";
+    if (form.password !== form.confirm) fe.confirm = "Passwords do not match";
+    if (!form.agree) fe.agree = "Please accept Terms";
+    setFieldErr(fe);
+    return Object.keys(fe).length === 0;
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (!validate()) return;
+
+    setLoading(true);
+    try {
+      const payload = {
+        nickname: `${form.firstname.trim()} ${form.lastname.trim()}`.trim(),
+        username: form.username.trim(),
+        email: form.email.trim(),
+        password: form.password,
+      };
+      const res = await registerApi(payload);
+      // สำเร็จ -> ไปหน้า login
+      // res.data: { success, message, user: { id, nickname, username, email } }
+      navigate("/login", { state: { registered: true } });
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Registration failed";
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const inputBase =
+    "w-full px-4 py-3 rounded-full bg-gray-900 text-white focus:outline-none transition duration-300 ease-in-out focus:scale-105";
+  const errText = "text-xs text-red-400 mt-1 px-2";
 
   return (
     <div className="flex text-white h-[885px]">
@@ -44,74 +92,85 @@ const Register = () => {
             </span>
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="firstname"
-              value={form.firstname}
-              onChange={handleChange}
-              placeholder="First name"
-              className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
-                         focus:outline-none focus:ring-2 focus:ring-purple-500 
-                         transition duration-300 ease-in-out focus:scale-105"
-              required
-            />
-            <input
-              type="text"
-              name="lastname"
-              value={form.lastname}
-              onChange={handleChange}
-              placeholder="Last name"
-              className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
-                         focus:outline-none focus:ring-2 focus:ring-purple-500 
-                         transition duration-300 ease-in-out focus:scale-105"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Email"
-              className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500 
-                         transition duration-300 ease-in-out focus:scale-105"
-              required
-            />
-            <input
-              type="text"
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              placeholder="Username"
-              className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500 
-                         transition duration-300 ease-in-out focus:scale-105"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="Password"
-              className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
-                         focus:outline-none focus:ring-2 focus:ring-purple-500 
-                         transition duration-300 ease-in-out focus:scale-105"
-              required
-              minLength={6}
-            />
-            <input
-              type="password"
-              name="confirm"
-              value={form.confirm}
-              onChange={handleChange}
-              placeholder="Confirm password"
-              className="w-full px-4 py-3 rounded-full bg-gray-900 text-white 
-                         focus:outline-none focus:ring-2 focus:ring-purple-500 
-                         transition duration-300 ease-in-out focus:scale-105"
-              required
-            />
+          {error && (
+            <div className="mb-4 text-sm bg-red-950/40 border border-red-500/30 rounded-md px-3 py-2 text-red-300">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div>
+              <input
+                type="text"
+                name="firstname"
+                value={form.firstname}
+                onChange={handleChange}
+                placeholder="First name"
+                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+              />
+              {fieldErr.firstname && <div className={errText}>{fieldErr.firstname}</div>}
+            </div>
+
+            <div>
+              <input
+                type="text"
+                name="lastname"
+                value={form.lastname}
+                onChange={handleChange}
+                placeholder="Last name"
+                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+              />
+              {fieldErr.lastname && <div className={errText}>{fieldErr.lastname}</div>}
+            </div>
+
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Email"
+                className={`${inputBase} focus:ring-2 focus:ring-blue-500`}
+              />
+              {fieldErr.email && <div className={errText}>{fieldErr.email}</div>}
+            </div>
+
+            <div>
+              <input
+                type="text"
+                name="username"
+                value={form.username}
+                onChange={handleChange}
+                placeholder="Username"
+                className={`${inputBase} focus:ring-2 focus:ring-blue-500`}
+              />
+              {fieldErr.username && <div className={errText}>{fieldErr.username}</div>}
+            </div>
+
+            <div>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="Password (min 6)"
+                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+                minLength={6}
+              />
+              {fieldErr.password && <div className={errText}>{fieldErr.password}</div>}
+            </div>
+
+            <div>
+              <input
+                type="password"
+                name="confirm"
+                value={form.confirm}
+                onChange={handleChange}
+                placeholder="Confirm password"
+                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+              />
+              {fieldErr.confirm && <div className={errText}>{fieldErr.confirm}</div>}
+            </div>
 
             <label className="flex items-center gap-3 text-sm text-gray-300">
               <input
@@ -120,22 +179,17 @@ const Register = () => {
                 checked={form.agree}
                 onChange={handleChange}
                 className="accent-purple-600"
-                required
               />
               I agree to the Terms & Privacy Policy
             </label>
+            {fieldErr.agree && <div className={errText}>{fieldErr.agree}</div>}
 
             <button
               type="submit"
-              className="w-full py-3 rounded-full font-bold text-lg text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:opacity-90 transition"
-              disabled={!form.agree || form.password !== form.confirm}
-              title={
-                form.password !== form.confirm
-                  ? "Passwords do not match"
-                  : undefined
-              }
+              disabled={loading}
+              className="w-full py-3 rounded-full font-bold text-lg text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:opacity-90 transition disabled:opacity-60"
             >
-              Create account
+              {loading ? "Creating..." : "Create account"}
             </button>
           </form>
 
@@ -159,9 +213,9 @@ const Register = () => {
 
           <p className="text-center text-sm text-gray-300 mt-6">
             Already have an account?{" "}
-            <a href="/login" className="underline decoration-purple-500">
+            <Link to="/login" className="underline decoration-purple-500">
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>
