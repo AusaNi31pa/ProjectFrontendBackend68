@@ -73,19 +73,12 @@ const Register = () => {
 
   return (
     <div className="flex text-white h-[885px]">
-      {/* Left visual */}
-      <div className="hidden md:flex w-1/2 items-end justify-center">
-        <img
-          src="/pic1.png"
-          alt="Cinema Robot"
-          className="w-[90%] max-w-[650px] max-h-[90%] drop-shadow-2xl rounded-xl"
-        />
-      </div>
-
-      {/* Right form */}
+      {/* 🟣 Form ซ้าย */}
       <div className="flex w-full md:w-1/2 items-center justify-center p-8">
         <div className="w-full max-w-md">
-          <h2 className="text-4xl font-bold mb-2 text-center font-battambang">Create Account</h2>
+          <h2 className="text-4xl font-bold mb-2 text-center font-battambang">
+            Create Account
+          </h2>
           <p className="text-center text-gray-300 mb-8">
             <span className="font-saira text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-300 text-2xl md:text-3xl lg:text-4xl">
               TIDWAEN CINEMA
@@ -99,112 +92,118 @@ const Register = () => {
           )}
 
           <form onSubmit={handleSubmit} className="font-battambang space-y-3">
-          {/* First + Last name */}
-          <div className="flex gap-4">
-            <div className="w-1/2">
-              <input
-                type="text"
-                name="firstname"
-                value={form.firstname}
-                onChange={handleChange}
-                placeholder="First name"
-                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
-              />
-              {fieldErr.firstname && <div className={errText}>{fieldErr.firstname}</div>}
+            {/* First + Last name */}
+            <div className="flex gap-4">
+              <div className="w-1/2">
+                <input
+                  type="text"
+                  name="firstname"
+                  value={form.firstname}
+                  onChange={handleChange}
+                  placeholder="First name"
+                  className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+                />
+                {fieldErr.firstname && (
+                  <div className={errText}>{fieldErr.firstname}</div>
+                )}
+              </div>
+
+              <div className="w-1/2">
+                <input
+                  type="text"
+                  name="lastname"
+                  value={form.lastname}
+                  onChange={handleChange}
+                  placeholder="Last name"
+                  className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+                />
+                {fieldErr.lastname && (
+                  <div className={errText}>{fieldErr.lastname}</div>
+                )}
+              </div>
             </div>
 
-            <div className="w-1/2">
+            {/* Email */}
+            <div>
               <input
-                type="text"
-                name="lastname"
-                value={form.lastname}
+                type="email"
+                name="email"
+                value={form.email}
                 onChange={handleChange}
-                placeholder="Last name"
+                placeholder="Email"
                 className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
               />
-              {fieldErr.lastname && <div className={errText}>{fieldErr.lastname}</div>}
+              {fieldErr.email && <div className={errText}>{fieldErr.email}</div>}
             </div>
-          </div>
 
-          {/* Email */}
-          <div>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Email"
-              className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
-            />
-            {fieldErr.email && <div className={errText}>{fieldErr.email}</div>}
-          </div>
+            {/* Username */}
+            <div>
+              <input
+                type="text"
+                name="username"
+                value={form.username}
+                onChange={handleChange}
+                placeholder="Username"
+                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+              />
+              {fieldErr.username && <div className={errText}>{fieldErr.username}</div>}
+            </div>
 
-          {/* Username */}
-          <div>
-            <input
-              type="text"
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              placeholder="Username"
-              className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
-            />
-            {fieldErr.username && <div className={errText}>{fieldErr.username}</div>}
-          </div>
+            {/* Password */}
+            <div>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="Password (min 6)"
+                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+                minLength={6}
+              />
+              {fieldErr.password && <div className={errText}>{fieldErr.password}</div>}
+            </div>
 
-          {/* Password */}
-          <div>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="Password (min 6)"
-              className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
-              minLength={6}
-            />
-            {fieldErr.password && <div className={errText}>{fieldErr.password}</div>}
-          </div>
+            {/* Confirm Password */}
+            <div>
+              <input
+                type="password"
+                name="confirm"
+                value={form.confirm}
+                onChange={handleChange}
+                placeholder="Confirm password"
+                className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
+              />
+              {fieldErr.confirm && <div className={errText}>{fieldErr.confirm}</div>}
+            </div>
 
-          {/* Confirm Password */}
-          <div>
-            <input
-              type="password"
-              name="confirm"
-              value={form.confirm}
-              onChange={handleChange}
-              placeholder="Confirm password"
-              className={`${inputBase} focus:ring-2 focus:ring-purple-500`}
-            />
-            {fieldErr.confirm && <div className={errText}>{fieldErr.confirm}</div>}
-          </div>
+            {/* Checkbox */}
+            <label className="flex items-center gap-3 text-sm text-gray-300">
+              <input
+                type="checkbox"
+                name="agree"
+                checked={form.agree}
+                onChange={handleChange}
+                className="accent-purple-600"
+              />
+              I agree to the Terms & Privacy Policy
+            </label>
+            {fieldErr.agree && <div className={errText}>{fieldErr.agree}</div>}
 
-          {/* Checkbox */}
-          <label className="flex items-center gap-3 text-sm text-gray-300">
-            <input
-              type="checkbox"
-              name="agree"
-              checked={form.agree}
-              onChange={handleChange}
-              className="accent-purple-600"
-            />
-            I agree to the Terms & Privacy Policy
-          </label>
-          {fieldErr.agree && <div className={errText}>{fieldErr.agree}</div>}
-
-          {/* Submit button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 rounded-full font-bold text-lg text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:opacity-90 transition disabled:opacity-60"
-          >
-            {loading ? "Creating..." : "Create account"}
-          </button>
-        </form>
+            {/* Submit button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 rounded-full text-lg text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:opacity-90 transition disabled:opacity-60"
+            >
+              {loading ? "Creating..." : "Create account"}
+            </button>
+          </form>
 
           <div className="flex items-center gap-3 my-8">
             <div className="flex-1 h-px bg-gray-800" />
-            <span className="font-battambang text-gray-300 text-sm">or continue with</span>
+            <span className="font-battambang text-gray-300 text-sm">
+              or continue with
+            </span>
             <div className="flex-1 h-px bg-gray-800" />
           </div>
 
@@ -228,7 +227,17 @@ const Register = () => {
           </p>
         </div>
       </div>
+
+      {/* 🟣 รูปอยู่ขวา */}
+      <div className="hidden md:flex w-1/2 items-end justify-center">
+        <img
+          src="/pic1.png"
+          alt="Cinema Robot"
+          className="w-[90%] max-w-[650px] max-h-[90%] drop-shadow-2xl rounded-xl transform scale-x-[-1]"
+        />
+      </div>
     </div>
+
   );
 };
 
